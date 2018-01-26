@@ -54,10 +54,12 @@
   \end{enumerate}
   \item Provde a timing chart for the processes listed below using multi-programming and another using multi-tasking.
 
-  \includegraphics[width=\linewidth]{OS_HW1.png}
+  \includegraphics[width=\linewidth]{OS_HW1_1.png}
   \begin{enumerate}
-    \item In the case of multiprogramming, process 1 will run for 20 ticks and then pause for IO for 30 ticks. Once 1 stops, 2 will run for the full 20 ticks, then complete. Since the 30 ticks required for the IO operation hasn't completed, 3 will start and run to completion. Then 1 will complete.
-    \item The multitasking case is identical since none of the porcesses take more than 40 ticks to complete and the io blocking from process one ends after process two completes. This makes process three run to completion before 40 ticks pass so process one will resume after 3 completes.
+    \item In the case of multiprogramming, process one will run for 20 ticks then block on IO for 30 ticks. In this case I am assuming batch programming rather than the smarter method that would start process two while process one is waiting on IO. Process one will resume at 50 ticks and then complete at 70 ticks. After this proccess two will complete and then process three will complete since they have no IO blocking and there is no time slicing in the mutli-programming.
+
+    \includegraphics[width=\linewidth]{OS_HW1.png}
+    \item In the multitasking case none of the processes take more than 40 ticks to complete and the io blocking from process one ends after process two completes. This makes process three run to completion before 40 ticks pass so process one will resume after 3 completes.
   \end{enumerate}
 \end{enumerate}
 
