@@ -23,7 +23,7 @@ static int pa2_close(struct inode *pinode, struct file *pfile);
 static loff_t pa2_seek(struct file *pfile, loff_t offset, int whence);
 static ssize_t pa2_read(struct file *pfile, char __user *buffer, size_t length, loff_t *offset);
 static ssize_t pa2_write(struct file *pfile, const char __user *buffer, size_t length, loff_t *offset);
-static char device_buffer[BUFFER_SIZE];
+static char * device_buffer;
 
 struct file_operations pa2_fops = {
   .open = pa2_open,
@@ -99,12 +99,14 @@ static char * pa2_device_name = "pa2_device";
 int pa2_init(void) {
   printk(KERN_INFO "Registering %s\n",__FUNCTION__);
   register_chrdev(MAJOR_NUM, pa2_device_name, &pa2_fops);
+  device_buffer = (char *)kmalloc(BUFFER_SIZE, GFP_KERNEL);
   return 0;
 }
 
 void pa2_exit(void) {
   printk(KERN_INFO "Unregistering %s\n",__FUNCTION__);
   unregister_chrdev(MAJOR_NUM, pa2_device_name);
+  kfree(device_buffer);
 }
 
 module_init(pa2_init);
